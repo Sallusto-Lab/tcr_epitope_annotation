@@ -27,8 +27,25 @@ A list of strings, each representing a clonotype, in the format:
 CDR3a+Va;CDR3b+Vb
 
 Up to 2 chains per locus can be included:
+
 TRA1:TRA2;TRB1:TRB2
 
 ## Usage
 
-Banana
+```python
+import tcr_epitope_3db
+
+# Import databases
+dbs = tcr_epitope_3db.import_3db(
+    "path/to/vdjdb.tsv",
+    "path/to/iedb.csv",
+    "path/to/mcpas.csv"
+)
+
+# Match clonotypes
+matches = tcr_epitope_3db.match_3db(
+    clonotypes,
+    *dbs,
+    max_distance=0
+)
+```
