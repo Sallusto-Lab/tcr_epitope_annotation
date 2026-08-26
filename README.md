@@ -49,3 +49,5 @@ matches = tcr_epitope_3db.match_3db(
     max_distance=0
 )
 ```
+
+`max_distance` controls the maximum Levenshtein distance allowed for CDR3 matching; it defaults to 0 for exact matching, while values greater than 0 allow approximate matches.
