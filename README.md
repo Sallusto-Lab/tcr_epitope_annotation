@@ -23,6 +23,7 @@ pip install -r requirements.txt
 ## Input format
 
 A list of strings, each representing a clonotype, in the format:
+
 CDR3a+Va;CDR3b+Vb
 
 Up to 2 chains per locus can be included:
