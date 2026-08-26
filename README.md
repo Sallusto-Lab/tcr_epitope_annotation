@@ -51,3 +51,15 @@ matches = tcr_epitope_3db.match_3db(
 ```
 
 `max_distance` controls the maximum Levenshtein distance allowed for CDR3 matching; it defaults to 0 for exact matching, while values greater than 0 allow approximate matches.
+
+## Output
+
+## Output
+
+The function returns a pandas DataFrame containing the identified TCR–epitope matches across VDJdb, IEDB, and McPAS-TCR, including query clonotype information, matched CDR3 and V-gene sequences, matching distances, epitope and antigen information, and MHC annotations.
+
+## Databases
+The tool currently supports matching against VDJdb, IEDB, and McPAS-TCR. Database files must be downloaded separately and provided to the import function. Each database is processed using database-specific import and matching logic to account for differences in their data structures.
+
+## Citation
+If you use this tool in your research, please cite the original databases used.
