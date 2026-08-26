@@ -54,8 +54,6 @@ matches = tcr_epitope_3db.match_3db(
 
 ## Output
 
-## Output
-
 The function returns a pandas DataFrame containing the identified TCR–epitope matches across VDJdb, IEDB, and McPAS-TCR, including query clonotype information, matched CDR3 and V-gene sequences, matching distances, epitope and antigen information, and MHC annotations.
 
 ## Databases
