@@ -7,7 +7,7 @@ TCR–epitope databases:
 - IEDB
 - McPAS-TCR
 
-The code supports exact CDR3 matching and optional Levenshtein-distance
+The code supports exact CDR3 matching and optional Levenshtein distance
 matching.
 
 ## Requirements
@@ -22,7 +22,7 @@ pip install -r requirements.txt
 
 ## Input format
 
-First, databases have to be imported by passing their locals paths to the import function. Then, TCRs are passed to the match function as list of strings, each representing a clonotype in the bioidentity format: CDR3+V.
+First, databases have to be imported by passing their local paths to the import function. Then, TCRs are passed to the match function as list of strings, each representing a clonotype in the bioidentity format: CDR3+V.
 
 Locus is inferred from the V gene name. Paired chains can be represented as: CDR3a+Va;CDR3b+Vb.
 
@@ -52,7 +52,7 @@ matches = tcr_epitope_3db.match_3db(
 
 ## Output
 
-The function returns a pandas DataFrame containing the identified TCR–epitope matches across VDJdb, IEDB, and McPAS-TCR, including query clonotype information, matched CDR3 and V-gene sequences, matching distances, epitope and antigen information, and MHC annotations.
+The function returns a pandas DataFrame containing the identified TCR-epitope matches across VDJdb, IEDB, and McPAS-TCR, including query clonotype information, matched CDR3 and V gene sequences, matching distances, epitope and antigen information, and MHC annotations.
 
 ## Databases
 The tool currently supports matching against VDJdb, IEDB, and McPAS-TCR. Database files must be downloaded separately and provided to the import function. Each database is processed using database-specific import and matching logic to account for differences in their data structures. The databases can be downloaded from their respective websites:
