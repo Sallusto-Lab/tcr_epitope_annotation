@@ -22,9 +22,9 @@ pip install -r requirements.txt
 
 ## Input format
 
-First, databases have to be imported by passing their locals paths to the import function. Then, TCRs are passed to the match function as list of strings, each representing a clonotype in the bioidentity format: CDR3+Vgene.
+First, databases have to be imported by passing their locals paths to the import function. Then, TCRs are passed to the match function as list of strings, each representing a clonotype in the bioidentity format: CDR3+V.
 
-Locus is inferred from the V gene. Paired chains can be represented as: CDR3a+Va;CDR3b+Vb.
+Locus is inferred from the V gene name. Paired chains can be represented as: CDR3a+Va;CDR3b+Vb.
 
 Up to 2 chains per locus can be included: TRA1:TRA2;TRB1:TRB2.
 
