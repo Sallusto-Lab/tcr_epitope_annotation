@@ -22,15 +22,11 @@ pip install -r requirements.txt
 
 ## Input format
 
-A list of strings, each representing a clonotype in the bioidentity format CDR3+Vgene.
+A list of strings, each representing a clonotype in the bioidentity format: CDR3+Vgene.
 
-Paired chains can be represented as:
+Paired chains can be represented as: CDR3a+Va;CDR3b+Vb
 
-CDR3a+Va;CDR3b+Vb
-
-Up to 2 chains per locus can be included:
-
-TRA1:TRA2;TRB1:TRB2
+Up to 2 chains per locus can be included: TRA1:TRA2;TRB1:TRB2
 
 ## Usage
 
