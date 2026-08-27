@@ -57,11 +57,9 @@ The function returns a pandas DataFrame containing the identified TCR–epitope 
 ## Databases
 The tool currently supports matching against VDJdb, IEDB, and McPAS-TCR. Database files must be downloaded separately and provided to the import function. Each database is processed using database-specific import and matching logic to account for differences in their data structures. The databases can be downloaded from their respective websites:
 
-https://vdjdb.com/search (export as TSV with no filters set)
-
-https://www.iedb.org/downloader.php?file_name=doc/tcr_full_v3.zip
-
-https://friedmanlab.weizmann.ac.il/McPAS-TCR/
+- VDJdb: https://vdjdb.com/search (export as TSV with no filters set)
+- IEDB: https://www.iedb.org/downloader.php?file_name=doc/tcr_full_v3.zip
+- McPAS-TCR: https://friedmanlab.weizmann.ac.il/McPAS-TCR/
 
 ## Citation
 If you use this tool in your research, please cite the original databases used.
