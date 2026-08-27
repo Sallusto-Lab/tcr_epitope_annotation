@@ -22,7 +22,9 @@ pip install -r requirements.txt
 
 ## Input format
 
-A list of strings, each representing a clonotype, in the format:
+A list of strings, each representing a clonotype in the bioidentity format CDR3+Vgene.
+
+Paired chains can be represented as:
 
 CDR3a+Va;CDR3b+Vb
 
