@@ -22,7 +22,7 @@ pip install -r requirements.txt
 
 ## Input format
 
-A list of strings, each representing a clonotype in the bioidentity format: CDR3+Vgene.
+First, databases have to be imported by passing their locals paths to the import function. Then, TCRs are passed to the match function as list of strings, each representing a clonotype in the bioidentity format: CDR3+Vgene.
 
 Paired chains can be represented as: CDR3a+Va;CDR3b+Vb.
 
