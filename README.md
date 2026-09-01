@@ -32,7 +32,7 @@ Up to 2 chains per locus can be included: TRA1:TRA2;TRB1:TRB2.
 
 1. Import databases
 ```bash
-python your_script.py import --vdjdb vdjdb.tsv --iedb iedb.csv --mcpas mcpas.csv
+python your_script.py import --vdjdb path/to/vdjdb.tsv --iedb path/to/iedb.csv --mcpas path/to/mcpas.csv
 ```
 
 2. Match clonotypes
@@ -53,5 +53,6 @@ The tool currently supports matching against VDJdb, IEDB, and McPAS-TCR. Databas
 - IEDB: https://www.iedb.org/downloader.php?file_name=doc/tcr_full_v3.zip
 - McPAS-TCR: https://friedmanlab.weizmann.ac.il/McPAS-TCR/
 
+In this way, VDJdb should be TSV while IEDB and McPAS-TCR should be CSV.
 ## Citation
 If you use this tool in your research, please cite the original databases used.
