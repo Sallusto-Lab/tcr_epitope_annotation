@@ -22,7 +22,7 @@ pip install -r requirements.txt
 
 ## Input format
 
-First, databases have to be imported by passing their local paths to the import function. Then, TCRs are passed to the match function as list of strings, each representing a clonotype in the bioidentity format: CDR3+V.
+First, databases have to be imported by passing their local paths to the import command. Then, TCRs are passed to the match command as a list of strings, each representing a clonotype in the bioidentity format: CDR3+V.
 
 Locus is inferred from the V gene name. Paired chains can be represented as: CDR3a+Va;CDR3b+Vb.
 
@@ -30,29 +30,21 @@ Up to 2 chains per locus can be included: TRA1:TRA2;TRB1:TRB2.
 
 ## Usage
 
-```python
-import tcr_epitope_3db
+1. Import databases
+```bash
+python your_script.py import --vdjdb vdjdb.tsv --iedb iedb.csv --mcpas mcpas.csv
+```
 
-# Import databases
-dbs = tcr_epitope_3db.import_3db(
-    "path/to/vdjdb.tsv",
-    "path/to/iedb.csv",
-    "path/to/mcpas.csv"
-)
-
-# Match clonotypes
-matches = tcr_epitope_3db.match_3db(
-    clonotypes,
-    *dbs,
-    max_distance=0
-)
+2. Match clonotypes
+```bash
+python your_script.py match clonotypes.txt --db tcr_databases.pkl
 ```
 
 `max_distance` controls the maximum Levenshtein distance allowed for CDR3 matching; it defaults to 0 for exact matching, while values greater than 0 allow approximate matches.
 
 ## Output
 
-The function returns a pandas DataFrame containing the identified TCR-epitope matches across VDJdb, IEDB, and McPAS-TCR, including query clonotype information, matched CDR3 and V gene sequences, matching distances, epitope and antigen information, and MHC annotations.
+The function returns tcr_matches.csv containing the identified TCR-epitope matches across VDJdb, IEDB, and McPAS-TCR, including query clonotype information, matched CDR3 and V gene sequences, matching distances, epitope and antigen information, and MHC annotations.
 
 ## Databases
 The tool currently supports matching against VDJdb, IEDB, and McPAS-TCR. Database files must be downloaded separately and provided to the import function. Each database is processed using database-specific import and matching logic to account for differences in their data structures. The databases can be downloaded from their respective websites:
