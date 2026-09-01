@@ -55,4 +55,4 @@ The tool currently supports matching against VDJdb, IEDB, and McPAS-TCR. Databas
 
 In this way, VDJdb should be TSV while IEDB and McPAS-TCR should be CSV.
 ## Citation
-If you use this tool in your research, please cite the original databases used.
+If you use this tool in your research, please cite this repository and the original databases used.
