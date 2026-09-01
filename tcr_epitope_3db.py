@@ -1,9 +1,12 @@
 import json
 import re
+import argparse
+import pickle
 
-import Levenshtein
-import numpy as np
 import pandas as pd
+import numpy as np
+import Levenshtein
+
 
 
 def create_tcr_query_df(clonotypes):
@@ -1113,10 +1116,10 @@ def import_vdjdb(path):
     # VDJdb has one chain per row.
     #
     # Gene determines the locus:
-    #   TRB → TRB
-    #   TRA → TRA
-    #   TRG → TRG
-    #   TRD → TRD
+    #   TRB â†’ TRB
+    #   TRA â†’ TRA
+    #   TRG â†’ TRG
+    #   TRD â†’ TRD
     vdjdb_chains = pd.DataFrame({
         'vdjdb_row': vdjdb.index,
         'complex_id': vdjdb['complex.id'],
@@ -1751,9 +1754,13 @@ def combine_matches(
     iedb['source'] = matches_iedb['Source Organism']
     iedb['mhc'] = matches_iedb['MHC Allele Names']
 
-    iedb[['mhc_class', 'species']] = (
-        iedb['mhc'].apply(annotate_mhc)
-    )
+    if not iedb.empty:
+        iedb[['mhc_class', 'species']] = (
+            iedb['mhc'].apply(annotate_mhc)
+        )
+    else:
+        iedb['mhc_class'] = pd.Series(dtype='object')
+        iedb['species'] = pd.Series(dtype='object')
 
     # McPAS
     mcpas = matches_mcpas[common_columns].copy()
@@ -1765,10 +1772,14 @@ def combine_matches(
     mcpas['source'] = matches_mcpas['Pathology']
     mcpas['mhc'] = matches_mcpas['MHC']
 
-    mcpas['mhc_class'] = (
-        mcpas['mhc']
-        .apply(lambda x: annotate_mhc(x)['mhc_class'])
-    )
+    if not mcpas.empty:
+        mcpas['mhc_class'] = (
+            mcpas['mhc']
+            .apply(lambda x: annotate_mhc(x)['mhc_class'])
+        )
+    else:
+        mcpas['mhc_class'] = pd.Series(dtype='object')
+    mcpas['species'] = matches_mcpas['Species']
 
     # McPAS already has species
     mcpas['species'] = matches_mcpas['Species']
@@ -1913,3 +1924,134 @@ def match_3db(
     )
 
     return matches_comb
+
+
+if __name__ == '__main__':
+
+    parser = argparse.ArgumentParser(
+        description='Match TCR clonotypes against VDJdb, IEDB, and McPAS-TCR.'
+    )
+
+    subparsers = parser.add_subparsers(
+        dest='command',
+        required=True
+    )
+
+    # Import command
+    import_parser = subparsers.add_parser(
+        'import',
+        help='Import and preprocess the databases and save them as a pickle.'
+    )
+
+    import_parser.add_argument(
+        '--vdjdb',
+        required=True,
+        help='Path to the VDJdb database file.'
+    )
+
+    import_parser.add_argument(
+        '--iedb',
+        required=True,
+        help='Path to the IEDB database file.'
+    )
+
+    import_parser.add_argument(
+        '--mcpas',
+        required=True,
+        help='Path to the McPAS-TCR database file.'
+    )
+
+    import_parser.add_argument(
+        '-o',
+        '--output',
+        default='tcr_databases.pkl',
+        help='Output pickle file (default: tcr_databases.pkl).'
+    )
+
+    # Match command
+    match_parser = subparsers.add_parser(
+        'match',
+        help='Match clonotypes against previously imported databases.'
+    )
+
+    match_parser.add_argument(
+        'clonotypes',
+        help='Path to a text file containing one clonotype per line.'
+    )
+
+    match_parser.add_argument(
+        '--db',
+        required=True,
+        help='Path to the pickle file containing imported databases.'
+    )
+
+    match_parser.add_argument(
+        '-d',
+        '--distance',
+        type=int,
+        default=0,
+        help='Maximum Levenshtein distance for CDR3 matching (default: 0).'
+    )
+
+    match_parser.add_argument(
+        '-o',
+        '--output',
+        default='tcr_matches.csv',
+        help='Output CSV file (default: tcr_matches.csv).'
+    )
+
+    args = parser.parse_args()
+
+    # Import databases
+    if args.command == 'import':
+
+        dbs = import_3db(
+            args.vdjdb,
+            args.iedb,
+            args.mcpas
+        )
+
+        with open(args.output, 'wb') as f:
+            pickle.dump(
+                dbs,
+                f
+            )
+
+        print(
+            f'Database import complete. '
+            f'Processed databases saved to {args.output}'
+        )
+
+    # Match clonotypes
+    elif args.command == 'match':
+
+        with open(args.clonotypes) as f:
+            clonotypes = [
+                line.strip()
+                for line in f
+                if line.strip()
+            ]
+
+        with open(args.db, 'rb') as f:
+            dbs = pickle.load(f)
+
+        matches = match_3db(
+            clonotypes,
+            *dbs,
+            max_distance=args.distance
+        )
+
+        if matches.empty:
+            print(
+                'No matches found in VDJdb, IEDB, or McPAS-TCR. '
+                'The output is empty.'
+            )
+
+        matches.to_csv(
+            args.output,
+            index=False
+        )
+
+        print(
+            f'Matching complete. Results saved to {args.output}'
+        )
