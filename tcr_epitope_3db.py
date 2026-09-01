@@ -89,7 +89,8 @@ def import_iedb(path):
 
     iedb = pd.read_csv(
         path,
-        skiprows=1
+        skiprows=1,
+        low_memory=False
     )
 
     def clean_text(x):
@@ -576,7 +577,8 @@ def match_iedb(query_df, iedb, iedb_chains, max_distance=0):
 
 def import_mcpas(path):
 
-    mcpas = pd.read_csv(path)
+    mcpas = pd.read_csv(path,
+                        low_memory=False)
 
     def remove_spaces(x):
 
@@ -1040,7 +1042,8 @@ def import_vdjdb(path):
 
     vdjdb = pd.read_csv(
         path,
-        sep='\t'
+        sep='\t',
+        low_memory=False
     )
 
     def remove_spaces(x):
