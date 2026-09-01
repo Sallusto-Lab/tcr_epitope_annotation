@@ -32,12 +32,12 @@ Up to 2 chains per locus can be included: TRA1:TRA2;TRB1:TRB2.
 
 1. Import databases
 ```bash
-python your_script.py import --vdjdb path/to/vdjdb.tsv --iedb path/to/iedb.csv --mcpas path/to/mcpas.csv
+python tcr_epitope_3db.py import --vdjdb path/to/vdjdb.tsv --iedb path/to/iedb.csv --mcpas path/to/mcpas.csv
 ```
 
 2. Match clonotypes
 ```bash
-python your_script.py match clonotypes.txt --db tcr_databases.pkl
+python tcr_epitope_3db.py match clonotypes.txt --db tcr_databases.pkl
 ```
 
 `max_distance` controls the maximum Levenshtein distance allowed for CDR3 matching; it defaults to 0 for exact matching, while values greater than 0 allow approximate matches.
