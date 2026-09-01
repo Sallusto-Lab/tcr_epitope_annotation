@@ -1829,7 +1829,7 @@ def combine_matches(
             vdjdb[columns]
         ],
         ignore_index=True
-    )
+    ).sort_values(by='query_id')
 
 
 def import_3db(path_vdjdb, path_iedb, path_mcpas):
